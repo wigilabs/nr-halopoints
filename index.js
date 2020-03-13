@@ -20,6 +20,8 @@ app.listen(app.get('port'), function(){
 	console.log('Listening on : ', app.get('port'));
 				      });
 
+//  Format => "name;[{data}]" http://165.227.204.184:25612/nagios/movistar;123456
+
 //receive post request from nagios api (PHP)
 app.post('/nagios/:nagios', async function(req,res){
   console.log(req.params.nagios);
@@ -28,12 +30,11 @@ app.post('/nagios/:nagios', async function(req,res){
   i=pst.split(';');
   let name=i[0];
   let data=i[1];
-  Format {"nagios":"movistar;123456"} http://165.227.204.184:25612/nagios/movistar;123456
   await con.query("INSERT INTO TASKS(SEQ, MONITOR, CLIENT_NAME, DATA_STREAM, TIME_EVENT) VALUES(0, 'nagios', ",name,", ", data, ", NOW());");
 });
 
 //receive post request from zabbix api (PYTHON)
-app.post('/zabbix/:name/:zabbix', async function(req,res){
+app.post('/zabbix/:zabbix', async function(req,res){
   console.log(req.params.zabbix);
   res.send(req.params.zabbix);
   let pst= req.params;
@@ -44,7 +45,7 @@ app.post('/zabbix/:name/:zabbix', async function(req,res){
 });
 
 //receive post request from splunk api (PYTHON)
-app.post('/splunk/:name/:splunk', async function(req,res){
+app.post('/splunk/:splunk', async function(req,res){
   console.log(req.params.splunk);
   res.send(req.params);
   let pst= req.params;
@@ -55,7 +56,7 @@ app.post('/splunk/:name/:splunk', async function(req,res){
 });
 
 //receive post request from zendesk api (PYTHON)
-app.post('/zendesk/:name/:zendesk', async function(req,res){
+app.post('/zendesk/:zendesk', async function(req,res){
   console.log(req.params.zendesk);
   res.send(req.params);
   let pst= req.params;
