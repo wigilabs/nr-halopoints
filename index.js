@@ -41,9 +41,9 @@ app.post('/nagios/:nagios', async function(req,res){
   let data=JSON.stringify(i[1]);
   console.log("Name => ", name);
   console.log("Data => ", data);
-  let con = await pool.getConnection();
-  const mdb = await con.query("INSERT INTO TASKS(SEQ, MONITOR, CLIENT_NAME, DATA_STREAM, TIME_EVENT) VALUES(0, 'nagios', ",name,", ", data, ", NOW());",[1, "mariadb"]);
-  console.log(mdb);
+  //let con = await pool.getConnection();
+  //const mdb = await con.query("INSERT INTO TASKS(SEQ, MONITOR, CLIENT_NAME, DATA_STREAM, TIME_EVENT) VALUES(0, 'nagios', ",name,", ", data, ", NOW());",[1, "mariadb"]);
+ // console.log(mdb);
 });
 
 //receive post request from zabbix api (PYTHON)
@@ -51,9 +51,11 @@ app.post('/zabbix/:zabbix', async function(req,res){
   console.log(req.params.zabbix);
   res.send(req.params.zabbix);
   let pst= req.params;
-  i=pst.split(';');
+  i=pst.zabbix.split(';');
   let name=i[0];
-  let data=i[1];
+  let data=JSON.stringify(i[1]);
+  console.log("Name => ", name);
+  console.log("Data => ", data);
   //await con.query("INSERT INTO TASKS(SEQ, MONITOR, CLIENT_NAME, DATA_STREAM, TIME_EVENT) VALUES(0, 'zabbix', ",name,", ", data, ", NOW());");
 });
 
@@ -62,9 +64,11 @@ app.post('/splunk/:splunk', async function(req,res){
   console.log(req.params.splunk);
   res.send(req.params);
   let pst= req.params;
-  i=pst.split(';');
+  i=pst.splunk.split(';');
   let name=i[0];
-  let data=i[1];
+  let data=JSON.stringify(i[1]);
+  console.log("Name => ", name);
+  console.log("Data => ", data);
   //await con.query("INSERT INTO TASKS(SEQ, MONITOR, CLIENT_NAME, DATA_STREAM, TIME_EVENT) VALUES(0, 'splunk', ",name,", ", data, ", NOW());");
 });
 
@@ -73,9 +77,11 @@ app.post('/zendesk/:zendesk', async function(req,res){
   console.log(req.params.zendesk);
   res.send(req.params);
   let pst= req.params;
-  i=pst.split(';');
+  i=pst.zendesk.split(';');
   let name=i[0];
-  let data=i[1];
+  let data=JSON.stringify(i[1]);
+  console.log("Name => ", name);
+  console.log("Data => ", data);
   //await con.query("INSERT INTO TASKS(SEQ, MONITOR, CLIENT_NAME, DATA_STREAM, TIME_EVENT) VALUES(0, 'zendesk', ",name,", ", data, ", NOW());");
 });
 
